@@ -16,7 +16,6 @@ sklearn → 머신러닝
 import seaborn as sns # seaborn을 불러오고 sns로 축약함
 iris = sns.load_datasat('iris') # iris라는 변수명으로 iris data를 다운로드함
 print(iris.head()) # 최초의 5개의 관측치를 print 
-
 ------------------------------------------------------------------------------
 print(iris.shape) # iris data의 행과 열의 수 
 X = iris.drop('species', axis=1) # 'species'열을 drop하고 input X를 정의함
@@ -43,9 +42,7 @@ iris['species'] : iris 데이터에서 species 열 선택
 .values : 그 열의 실제 값들 꺼내기
 _ : 띄어쓰기 대신 단어 연결
 print('species labels:',np.unique(yo)) # 중복되는 y값을 하나로 정리하여 프린트
-
 -------------------------------------------------------------------------------
-
 yo=classle.inverse_transform(y) # 원래의 species 문자열로 전환
 print('species:', np.unique(yo))
 
@@ -69,7 +66,21 @@ print(Y_test.shape)
 4. 모형 추정 및 사례중심 학습 
 
 from sklearn.neighbors import KNeighborsClassifier # knn불러오기
-knn=KneighborsClassfier(
+knn=KneighborsClassfier(n_neighbors=5,p=2) 
+KNN 모델 생성
+n_neighbors=5
+-> 가까운 이웃 5개 보고 결정
+p=2
+-> 거리 계산 방법 (유클리드 거리)
+knn.fit(X_train, y_train) fit(학습) 모델이 데이터를 기억하는 단계
+------------------------------------------------------------------------------
+y_train_pred = knn.predict(X_train) #train data의 y값 예측치
+y_test_pred = knn.predict(X_test) # 모델을 적용한 test data의 y값 예측
+print('Misclassified training samples: %d' %(Y_train!=Y_train_pred).sum())
+print('Misclassified test samples: %d' %(Y_test!=Y_test_pred).sum()) # 오분류 데이터 개수 확인
+------------------------------------------------------------------------------
+from sklearn.metrics import accuracy_score
+print(accuracy_score(Y_test, Y_test_pred))
 
 
 
