@@ -42,7 +42,35 @@ fit_transform : 보고 배우고 바로 변환
 iris['species'] : iris 데이터에서 species 열 선택
 .values : 그 열의 실제 값들 꺼내기
 _ : 띄어쓰기 대신 단어 연결
-print('species labels:',np.unique(yo))
+print('species labels:',np.unique(yo)) # 중복되는 y값을 하나로 정리하여 프린트
+
+-------------------------------------------------------------------------------
+
+yo=classle.inverse_transform(y) # 원래의 species 문자열로 전환
+print('species:', np.unique(yo))
+
+3.  데이터 분할 
+
+from sklearn.model_selection import train_test_split 
+# sciket-learn에 저장되어있는 model_selection library 를 train_test_split으로 명명
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1, stratify=y)
+
+train_test_split(X, y, ...) 는 X랑 y를 나눠주는 함수이며, 
+test_size=0.3 = 전체의 30%를 테스트로 쓰겠다는 뜻
+test_size = 테스트 비율
+stratify = 비율 유지 ⭐
+random_state = 결과 고정
+
+print(X_train.shape)
+print(X_test.shape)
+print(Y_train.shape)
+print(Y_test.shape)
+
+4. 모형 추정 및 사례중심 학습 
+
+from sklearn.neighbors import KNeighborsClassifier # knn불러오기
+knn=KneighborsClassfier(
+
 
 
 
