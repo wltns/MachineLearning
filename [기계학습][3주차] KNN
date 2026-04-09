@@ -14,7 +14,7 @@ sklearn → 머신러닝
 - 데이터 전처리 ( 데이터와 라벨 나누기 )
 
 import seaborn as sns # seaborn을 불러오고 sns로 축약함
-iris = sns.load_datasat('iris') # iris라는 변수명으로 iris data를 다운로드함
+iris = sns.load_dataset('iris') # iris라는 변수명으로 iris data를 다운로드함
 print(iris.head()) # 최초의 5개의 관측치를 print 
 ------------------------------------------------------------------------------
 print(iris.shape) # iris data의 행과 열의 수 
