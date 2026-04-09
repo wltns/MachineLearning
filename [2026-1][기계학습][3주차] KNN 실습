@@ -13,6 +13,13 @@ import seaborn as sns # seaborn을 불러오고 sns로 축약함
 iris = sns.load_datasat('iris') # iris라는 변수명으로 iris data를 다운로드함
 print(iris.head()) # 최초의 5개의 관측치를 print 
 
+------------------------------------------------------------------------------
+print(iris.shape) # iris data의 행과 열의 수 
+X = iris.drop('species', axis=1) # 'species'열을 drop하고 input X를 정의함
+print(X.shape)
+y=iris['species'] # 'species'열을 lavel y를 정의함
+
+2. 
 
 
 
