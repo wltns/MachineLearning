@@ -5,15 +5,15 @@ iris = sns.load_dataset('iris')  # iris라는 변수명으로 Iris data를 downl
 X = iris.drop('species', axis=1) # 'species'열을 drop하고 input X를 정의
 y = iris['species']
 
-# y data를 범주형으로 변환
+# y data를 범주형으로 변환 (숫자로)
 from sklearn.preprocessing import LabelEncoder    # LabelEncoder() method를 불러옴
 classle = LabelEncoder()
 y = classle.fit_transform(iris['species'].values) # species 열의 문자열을 categorical 값으로 전환
 
 # 전체 data를 training set과 test set으로 split
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3,
-                                                    random_state=1, stratify=y)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1, stratify=y)
+
 # 표준화
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
