@@ -1,1 +1,38 @@
+# 데이터 불러오기
+import seaborn as sns # seaborn을 불러오고 SNS로 축약
+iris = sns.load_dataset('iris')  # iris라는 변수명으로 Iris data를 download
 
+X = iris.drop('species', axis=1) # 'species'열을 drop하고 input X를 정의
+y = iris['species']
+
+# y data를 범주형으로 변환
+from sklearn.preprocessing import LabelEncoder    # LabelEncoder() method를 불러옴
+classle = LabelEncoder()
+y = classle.fit_transform(iris['species'].values) # species 열의 문자열을 categorical 값으로 전환
+
+# 전체 data를 training set과 test set으로 split
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3,
+                                                    random_state=1, stratify=y)
+# 표준화
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+sc.fit(X_train)
+X_train_std = sc.transform(X_train)
+X_test_std = sc.transform(X_test)
+
+# Logistic regression
+from sklearn.linear_model import LogisticRegression
+Logit = LogisticRegression(C=200, random_state=11)  # C = 1/λ. 디폴트: L2, Auto.  
+l_1=Logit.fit(X_train_std, y_train)
+y_train_pred = Logit.predict(X_train_std)
+y_test_pred = Logit.predict(X_test_std)
+
+# Accuracy score
+from sklearn.metrics import accuracy_score
+print(accuracy_score(y_train,y_train_pred))  
+print(accuracy_score(y_test,y_test_pred)) 
+
+# Confusion matrix
+from sklearn.metrics import confusion_matrix
+print(confusion_matrix(y_test, y_test_pred))  # Confusion matrix
