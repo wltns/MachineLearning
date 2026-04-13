@@ -47,6 +47,7 @@ best_model.fit(X_train, y_train)
 pred = best_model.predict(X_test)
 
 sample_submission = pd.read_csv('/kaggle/input/competitions/2026-1-ml-6wp1/sample_submission.csv')
+# 마지막 제출 때 sample submission을 불러와야함 
 sample_submission['TARGET'] = pred
 sample_submission.to_csv('submission.csv', index=False)
 print(sample_submission.head())
