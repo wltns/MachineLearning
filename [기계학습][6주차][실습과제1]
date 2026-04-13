@@ -1,1 +1,52 @@
+# 라이브러리
 
+import random
+import os
+import numpy as np
+import pandas as pd
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import cross_val_score
+
+seed = 42
+random.seed(seed)
+np.random.seed(seed)
+os.environ["PYTHONHASHSEED"] = str(seed)
+
+# 데이터 불러오기 
+X_test=pd.read_csv('/kaggle/input/competitions/2026-1-ml-6wp1/X_test.csv')
+train=pd.read_csv('/kaggle/input/competitions/2026-1-ml-6wp1/data.csv')
+submit=pd.read_csv('/kaggle/input/competitions/2026-1-ml-6wp1/sample_submission.csv')
+
+print(X_test.head())
+print(train.head())
+print(submit.head())
+
+X_train = train.drop(columns=['TARGET'])
+y_train = train['TARGET']
+
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test  = sc.transform(X_test)
+
+best_depth = None
+best_score = -np.inf
+ 
+for depth in [3, 5, 7, 10, 15, None]:
+    model = DecisionTreeRegressor(max_depth=depth, random_state=seed)
+    scores = cross_val_score(model, X_train, y_train, cv=5, scoring='r2')
+    print(f"max_depth={str(depth):>4} | R² = {scores.mean():.4f} ± {scores.std():.4f}")
+    if scores.mean() > best_score:
+        best_score = scores.mean()
+        best_depth = depth
+ 
+print(f"\n→ 최적 max_depth: {best_depth} (R²={best_score:.4f})")
+
+best_model = DecisionTreeRegressor(max_depth=best_depth, random_state=seed)
+best_model.fit(X_train, y_train)
+pred = best_model.predict(X_test)
+
+sample_submission = pd.read_csv('/kaggle/input/competitions/2026-1-ml-6wp1/sample_submission.csv')
+sample_submission['TARGET'] = pred
+sample_submission.to_csv('submission.csv', index=False)
+print(sample_submission.head())
