@@ -22,7 +22,7 @@ print(X_test.head())
 print(train.head())
 print(submit.head())
 
-X_train = train.drop(columns=['TARGET'])
+X_train = train.drop('TARGET')
 y_train = train['TARGET']
 
 sc = StandardScaler()
